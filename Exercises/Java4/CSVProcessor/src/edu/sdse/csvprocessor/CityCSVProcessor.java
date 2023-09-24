@@ -23,7 +23,7 @@ public class CityCSVProcessor {
 				String city = convertToString(rawValues[2]);
 				int population = convertToInt(rawValues[3]);
 				
-				System.out.println("id: " + id + ", year: " + year + ", city: " + city + ", population: " + population);
+				// System.out.println("id: " + id + ", year: " + year + ", city: " + city + ", population: " + population);
 				
 				CityRecord cityRecord = new CityRecord(id, year, city, population);
 				System.out.println(cityRecord);
