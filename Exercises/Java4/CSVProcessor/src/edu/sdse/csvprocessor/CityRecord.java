@@ -16,4 +16,16 @@ public class CityRecord {
 	public String toString(){
 		return "id: " + this.id + ", year: " + this.year + ", city: " + this.city + ", population: " + this.population;
 	}
+	
+	public String getCity() {
+		return this.city;
+	}
+	
+	public int getPopulation() {
+		return this.population;
+	}
+	
+	public int getYear() {
+		return this.year;
+	}
 }

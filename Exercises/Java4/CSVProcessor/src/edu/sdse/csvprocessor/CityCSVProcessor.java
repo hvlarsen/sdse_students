@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileReader;
 
 public class CityCSVProcessor {
+	private List<CityRecord> allRecords = new ArrayList<>();
+	private Map<String, List<CityRecord>> cityMap = new HashMap<String, List<CityRecord>>();
 	
 	public void readAndProcess(File file) {
 		//Try with resource statement (as of Java 8)
@@ -17,9 +19,6 @@ public class CityCSVProcessor {
 			br.readLine();
 			
 			String line;
-			
-			List<CityRecord> allRecords = new ArrayList<>();
-			Map<String, List<CityRecord>> cityMap = new HashMap<String, List<CityRecord>>();
 			
 			while ((line = br.readLine()) != null) {
 				// Parse each line
@@ -34,17 +33,42 @@ public class CityCSVProcessor {
 				
 				allRecords.add(cityRecord);
 				
-				List<CityRecord> cityList = cityMap.get(city);
-				if(cityList == null) {
-				    cityList = new ArrayList<>();
-				}
-				cityList.add(cityRecord);
-				cityMap.put(city, cityList);
+				addCityRecordToMap(cityRecord);
+				
 				System.out.println(cityRecord);
 			}
 		} catch (Exception e) {
 			System.err.println("An error occurred:");
 			e.printStackTrace();
+		}
+		processDataByCity();
+	}
+	
+	private void addCityRecordToMap(CityRecord cityRecord) {
+		List<CityRecord> cityList = cityMap.get(cityRecord.getCity());
+		if(cityList == null) {
+		    cityList = new ArrayList<>();
+		}
+		cityList.add(cityRecord);
+		cityMap.put(cityRecord.getCity(), cityList);
+	}
+	
+	private void processDataByCity() {
+		for (Map.Entry<String, List<CityRecord>> entry : cityMap.entrySet()) {
+			int numberOfEntries = 0;
+			int populationSum = 0;
+			int minYear = Integer.MAX_VALUE;
+			int maxYear = Integer.MIN_VALUE;
+			for (CityRecord record : entry.getValue()) {
+				    numberOfEntries++;
+				    populationSum = populationSum + record.getPopulation();
+				    minYear = Math.min(minYear, record.getYear());
+				    maxYear = Math.max(maxYear, record.getYear());
+			}
+			double avgPopulation = (double) populationSum / numberOfEntries;
+			
+			CityAggregateData cityAggregateData  = new CityAggregateData(entry.getKey(), numberOfEntries, avgPopulation, minYear, maxYear);
+			System.out.println(cityAggregateData);
 		}
 	}
 	
