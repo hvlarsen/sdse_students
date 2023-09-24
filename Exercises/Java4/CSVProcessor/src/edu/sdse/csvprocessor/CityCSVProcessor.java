@@ -1,6 +1,10 @@
 package edu.sdse.csvprocessor;
 
 import java.io.BufferedReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.io.File;
 import java.io.FileReader;
 
@@ -14,6 +18,9 @@ public class CityCSVProcessor {
 			
 			String line;
 			
+			List<CityRecord> allRecords = new ArrayList<>();
+			Map<String, List<CityRecord>> cityMap = new HashMap<String, List<CityRecord>>();
+			
 			while ((line = br.readLine()) != null) {
 				// Parse each line
 				String[] rawValues = line.split(",");
@@ -22,10 +29,17 @@ public class CityCSVProcessor {
 				int year = convertToInt(rawValues[1]);
 				String city = convertToString(rawValues[2]);
 				int population = convertToInt(rawValues[3]);
-				
-				// System.out.println("id: " + id + ", year: " + year + ", city: " + city + ", population: " + population);
-				
+								
 				CityRecord cityRecord = new CityRecord(id, year, city, population);
+				
+				allRecords.add(cityRecord);
+				
+				List<CityRecord> cityList = cityMap.get(city);
+				if(cityList == null) {
+				    cityList = new ArrayList<>();
+				}
+				cityList.add(cityRecord);
+				cityMap.put(city, cityList);
 				System.out.println(cityRecord);
 			}
 		} catch (Exception e) {
