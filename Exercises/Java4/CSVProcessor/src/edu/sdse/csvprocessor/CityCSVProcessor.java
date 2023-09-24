@@ -25,7 +25,8 @@ public class CityCSVProcessor {
 				
 				System.out.println("id: " + id + ", year: " + year + ", city: " + city + ", population: " + population);
 				
-				//TODO: Extend the program to process entries!
+				CityRecord cityRecord = new CityRecord(id, year, city, population);
+				System.out.println(cityRecord);
 			}
 		} catch (Exception e) {
 			System.err.println("An error occurred:");
