@@ -16,6 +16,6 @@ public class CityAggregateData {
 	}
 	
 	public String toString(){
-		return "Average population of " + city + "(" + minYear + "-" + maxYear + "; " + numberOfEntries + " entries): " + avgPopulation;
+		return "Average population of " + city + " (" + minYear + "-" + maxYear + "; " + numberOfEntries + " entries): " + avgPopulation;
 	}
 }

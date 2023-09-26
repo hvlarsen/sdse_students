@@ -21,16 +21,7 @@ public class CityCSVProcessor {
 			String line;
 			
 			while ((line = br.readLine()) != null) {
-				// Parse each line
-				String[] rawValues = line.split(",");
-				
-				int id = convertToInt(rawValues[0]);
-				int year = convertToInt(rawValues[1]);
-				String city = convertToString(rawValues[2]);
-				int population = convertToInt(rawValues[3]);
-								
-				CityRecord cityRecord = new CityRecord(id, year, city, population);
-				
+				CityRecord cityRecord = parseLine(line);
 				allRecords.add(cityRecord);
 				
 				addCityRecordToMap(cityRecord);
@@ -42,6 +33,18 @@ public class CityCSVProcessor {
 			e.printStackTrace();
 		}
 		processDataByCity();
+	}
+	
+	private CityRecord parseLine(String line) {
+		String[] rawValues = line.split(",");
+		
+		int id = convertToInt(rawValues[0]);
+		int year = convertToInt(rawValues[1]);
+		String city = convertToString(rawValues[2]);
+		int population = convertToInt(rawValues[3]);
+						
+		CityRecord cityRecord = new CityRecord(id, year, city, population);
+		return cityRecord;
 	}
 	
 	private void addCityRecordToMap(CityRecord cityRecord) {
